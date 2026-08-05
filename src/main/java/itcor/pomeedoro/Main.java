@@ -53,6 +53,7 @@ public class Main extends Application {
         root.setRight(workRelaxPanel);
 
         var scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
         stage.setScene(scene);
         stage.setWidth(320);
         stage.setHeight(320);
