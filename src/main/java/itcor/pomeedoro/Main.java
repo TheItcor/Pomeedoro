@@ -60,7 +60,7 @@ public class Main extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE); // Infinity time going
 
         // Pause/Play/Skip Buttons
-        var stopButton = new Button("[x]");
+        var stopButton = new Button("||");
         stopButton.setOnAction(actionEvent -> {
             timeline.stop();
         });
@@ -86,18 +86,18 @@ public class Main extends Application {
         centralButtonsBox.setAlignment(Pos.CENTER);
 
 
-        // Work & Relax
-        var workLabel1 = new Label("[w]");
-        var workLabel2 = new Label("[w]");
-        var relaxLabel1 = new Label("[r]");
-        var relaxLabel2 = new Label("[r]");
-        var workRelaxPanel = new VBox(10, workLabel1, relaxLabel1, workLabel2, relaxLabel2);
-        workRelaxPanel.setAlignment(Pos.CENTER);
+//        // Work & Relax
+//        var workLabel1 = new Label("[w]");
+//        var workLabel2 = new Label("[w]");
+//        var relaxLabel1 = new Label("[r]");
+//        var relaxLabel2 = new Label("[r]");
+//        var workRelaxPanel = new VBox(10, workLabel1, relaxLabel1, workLabel2, relaxLabel2);
+//        workRelaxPanel.setAlignment(Pos.CENTER);
 
 
         // Position on root
         root.setCenter(centralButtonsBox); // set Timer & Buttons
-        root.setRight(workRelaxPanel);
+//        root.setRight(workRelaxPanel);
 
         var scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/css/app.css").toExternalForm());
