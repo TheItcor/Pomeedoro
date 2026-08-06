@@ -1,21 +1,39 @@
 .root {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
+    -bg: #fff8f3;
+    -surface: #ffffff;
+    -accent: #f97316;
+    -accent-hover: #ea580c;
+    -text: #3d2c22;
+    -text-dim: #a8968a;
 }
 
 #timerLabel {
-    -fx-font-size: 48px;
+    -fx-font-family: "JetBrains Mono", monospace;
+    -fx-font-size: 56px;
     -fx-font-weight: bold;
+    -fx-text-fill: -text;
 }
 
 #statusLabel {
-    -fx-font-size: 28px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
+    -fx-text-fill: -accent;
 }
 
-
 .button {
-    -fx-min-width: 50px;
-    -fx-max-width: 50px;
     -fx-pref-width: 50px;
+    -fx-pref-height: 40px;
+    -fx-background-color: -surface;
+    -fx-text-fill: -text;
+    -fx-background-radius: 10px;
+    -fx-font-size: 18px;
+}
+
+.button:hover {
+    -fx-background-color: -accent-hover;
+    -fx-text-fill: #ffffff;
+}
+
+.button:pressed {
+    -fx-background-color: -accent;
 }
