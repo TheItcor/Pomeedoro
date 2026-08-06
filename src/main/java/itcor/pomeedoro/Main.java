@@ -54,6 +54,10 @@ public class Main extends Application {
 
         // Pause/Play/Skip Buttons
         var stopButton = new Button("[x]");
+        stopButton.setOnAction(actionEvent -> {
+            timeline.stop();
+        });
+
         var playButton = new Button(">");
         var skipButton = new Button(">>");
         var panelBox = new HBox(3, stopButton, playButton, skipButton);
