@@ -29,16 +29,13 @@ public class PomeedoroTimer {
         return seconds;
     }
 
-    public boolean isStatusIsWork() {
-        return statusIsWork;
-    }
-
-    public int getSwitchCount() {
-        return switchCount;
-    }
-
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
+    public boolean isFinished(){
+        if (seconds <= 0) {
+            // SOUND
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String getStatusWork() {

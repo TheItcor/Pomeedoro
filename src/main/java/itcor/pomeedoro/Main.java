@@ -37,7 +37,7 @@ public class Main extends Application {
         timeBox.setAlignment(Pos.CENTER);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
-            if (timer.getSeconds() <= 0) {
+            if (timer.isFinished()) {
                 System.out.println("Time stops!");
                 timeline.stop();
                 timer.nextStatus();
