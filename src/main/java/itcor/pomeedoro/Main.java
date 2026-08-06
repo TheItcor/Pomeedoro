@@ -16,6 +16,9 @@ import javafx.util.Duration;
 
 import static itcor.pomeedoro.TimeFormatter.interpretSeconds;
 
+/**
+ * Main class provides GUI and appeals to PomeedoroTimer.
+ */
 public class Main extends Application {
     private Timeline timeline;
     private Label textStatus;
@@ -28,29 +31,34 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        // Load the alert sound
         beep = new AudioClip(getClass().getResource("/sound/alert.wav").toExternalForm());
         beep.setVolume(0.8);
 
-        var timer = new PomeedoroTimer();
-        var root = new BorderPane();
+        var timer = new PomeedoroTimer();   // Pomodoro logics
+        var root = new BorderPane();        // GUI plane
 
 
         // Timer Group
-        textTimer = new Label(interpretSeconds(timer.getSeconds()));
-        textStatus = new Label("Work");
+        textTimer = new Label(interpretSeconds(timer.getSeconds())); // label that shows the time
+        textStatus = new Label("Work");                           // label that shows the status (Work or Relax)
         var timeBox = new VBox(5, textTimer, textStatus);
         timeBox.setAlignment(Pos.CENTER);
 
+        // Logics for each second of the timer
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+            // IF time is over THEN change status ELSE continue...
             if (timer.isFinished()) {
                 System.out.println("Time stops!");
                 timeline.stop();
                 timer.nextStatus();
                 beep.play();
+
+                // Update labels:
                 textStatus.setText(timer.getStatusWork());
                 textTimer.setText(interpretSeconds(timer.getSeconds()));
             } else {
-                timer.tick();
+                timer.tick(); // second--
                 textTimer.setText(interpretSeconds(timer.getSeconds()));
                 System.out.println("seconds: " + timer.getSeconds());
             }
@@ -60,24 +68,29 @@ public class Main extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE); // Infinity time going
 
         // Pause/Play/Skip Buttons
+        // Pause the timer
         var stopButton = new Button("■");
         stopButton.setOnAction(actionEvent -> {
             timeline.stop();
         });
 
+        // Starts the timer
         var playButton = new Button(">");
         playButton.setOnAction(actionEvent -> {
             timeline.play();
         });
 
+        // Skips change status: Work -> Relax ; Relax -> Work
         var skipButton = new Button(">>");
         skipButton.setOnAction(actionEvent -> {
+            timeline.stop();
             timer.nextStatus();
+            // Update labels:
             textStatus.setText(timer.getStatusWork());
             textTimer.setText(interpretSeconds(timer.getSeconds()));
-            timeline.stop();
         });
 
+        // Buttons places
         var panelBox = new HBox(3, stopButton, playButton, skipButton);
         panelBox.setAlignment(Pos.CENTER);
 
