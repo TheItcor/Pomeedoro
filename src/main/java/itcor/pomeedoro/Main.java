@@ -44,6 +44,9 @@ public class Main extends Application {
         textStatus = new Label("Work");                           // label that shows the status (Work or Relax)
         var timeBox = new VBox(5, textTimer, textStatus);
         timeBox.setAlignment(Pos.CENTER);
+        // for CSS
+        textTimer.setId("timerLabel");
+        textStatus.setId("statusLabel");
 
         // Logics for each second of the timer
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {

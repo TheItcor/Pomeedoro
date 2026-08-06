@@ -3,6 +3,17 @@
     -fx-font-weight: bold;
 }
 
+#timerLabel {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+}
+
+#statusLabel {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+
 .button {
     -fx-min-width: 50px;
     -fx-max-width: 50px;
