@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -19,6 +20,7 @@ public class Main extends Application {
     private Timeline timeline;
     private Label textStatus;
     private Label textTimer;
+    private AudioClip beep;
 
     public static void main(String[] args) {
         launch();
@@ -26,6 +28,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        beep = new AudioClip(getClass().getResource("/sound/alert.wav").toExternalForm());
+        beep.setVolume(0.8);
+
         var timer = new PomeedoroTimer();
         var root = new BorderPane();
 
@@ -41,6 +46,7 @@ public class Main extends Application {
                 System.out.println("Time stops!");
                 timeline.stop();
                 timer.nextStatus();
+                beep.play();
                 textStatus.setText(timer.getStatusWork());
                 textTimer.setText(interpretSeconds(timer.getSeconds()));
             } else {

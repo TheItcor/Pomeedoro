@@ -1,7 +1,5 @@
 package itcor.pomeedoro;
 
-import javafx.scene.media.AudioClip;
-
 public class PomeedoroTimer {
     private int seconds = 10;
     private boolean statusIsWork = true;
@@ -32,12 +30,7 @@ public class PomeedoroTimer {
     }
 
     public boolean isFinished(){
-        if (seconds <= 0) {
-            // SOUND
-            return true;
-        } else {
-            return false;
-        }
+        return seconds <= 0;
     }
 
     public String getStatusWork() {
