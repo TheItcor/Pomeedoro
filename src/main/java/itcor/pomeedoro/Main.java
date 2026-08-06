@@ -1,5 +1,7 @@
 package itcor.pomeedoro;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,6 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    private Timeline timeline;
+    private int seconds = 10;
+    private boolean statusIsWork = true;
+    private int switchCount = 0;
+    private Label textStatus;
+    private Label textTimer;
+
     public static void main(String[] args) {
         launch();
     }
