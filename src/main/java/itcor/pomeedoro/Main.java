@@ -64,6 +64,11 @@ public class Main extends Application {
         });
 
         var skipButton = new Button(">>");
+        skipButton.setOnAction(actionEvent -> {
+            nextStatus();
+            timeline.stop();
+        });
+
         var panelBox = new HBox(3, stopButton, playButton, skipButton);
         panelBox.setAlignment(Pos.CENTER);
 
