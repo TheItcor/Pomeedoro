@@ -36,6 +36,22 @@ public class Main extends Application {
         var timeBox = new VBox(5, textTimer, textStatus);
         timeBox.setAlignment(Pos.CENTER);
 
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+            if (seconds <= 0) {
+                System.out.println("Time stops!");
+                timeline.stop();
+                nextStatus();
+            } else {
+
+                seconds--;
+                textTimer.setText(interpretSeconds(seconds));
+                System.out.println("seconds: " + seconds);
+            }
+        });
+
+        timeline = new Timeline(keyFrame);
+        timeline.setCycleCount(Timeline.INDEFINITE); // Infinity time going
+
         // Pause/Play/Skip Buttons
         var stopButton = new Button("[x]");
         var playButton = new Button(">");
