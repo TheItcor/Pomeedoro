@@ -4,12 +4,12 @@ package itcor.pomeedoro;
  * Logics for Pomodoro timer with Relax-Work time periods.
  */
 public class PomeedoroTimer {
-    private int seconds = 10;
+    private int seconds = 30 * 60;
     private boolean statusIsWork = true;
     private int switchCount = 0;
 
-    private final int WORK_TIME_SECONDS = 10;
-    private final int RELAX_TIME_SECONDS = 5;
+    private final int WORK_TIME_SECONDS = 30 * 60;
+    private final int RELAX_TIME_SECONDS = 5 * 60;
 
     public PomeedoroTimer() {}
 
