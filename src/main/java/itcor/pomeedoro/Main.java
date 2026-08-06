@@ -69,4 +69,31 @@ public class Main extends Application {
         stage.setTitle("Pomeedoro");
         stage.show();
     }
+
+    public String interpretSeconds(int seconds) {
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60; // Получаем остаток
+        return "%02d:%02d".formatted(minutes, remainingSeconds);
+    }
+
+    public void switchStatus() {
+        statusIsWork = !statusIsWork;
+    }
+
+    public void nextStatus() {
+        switchStatus();
+        if (statusIsWork) {
+            seconds = 10;
+            textTimer.setText(interpretSeconds(seconds));
+            textStatus.setText("Work");
+            System.out.println("Time for Work!");
+        } else {
+            seconds = 5;
+            textTimer.setText(interpretSeconds(seconds));
+            textStatus.setText("Relax");
+            System.out.println("Time for relax!");
+        }
+
+        switchCount++;
+    }
 }
