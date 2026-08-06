@@ -60,7 +60,7 @@ public class Main extends Application {
         timeline.setCycleCount(Timeline.INDEFINITE); // Infinity time going
 
         // Pause/Play/Skip Buttons
-        var stopButton = new Button("||");
+        var stopButton = new Button("■");
         stopButton.setOnAction(actionEvent -> {
             timeline.stop();
         });
