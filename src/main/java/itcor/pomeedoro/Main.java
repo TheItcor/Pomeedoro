@@ -31,8 +31,8 @@ public class Main extends Application {
 
 
         // Timer Group
-        var textTimer = new Label("00:00");
-        var textStatus = new Label("Relax");
+        textTimer = new Label(interpretSeconds(seconds));
+        textStatus = new Label("Work");
         var timeBox = new VBox(5, textTimer, textStatus);
         timeBox.setAlignment(Pos.CENTER);
 
