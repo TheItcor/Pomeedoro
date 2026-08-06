@@ -48,11 +48,11 @@ public class Main extends Application {
         textTimer.setId("timerLabel");
         textStatus.setId("statusLabel");
 
-        // Logics for each second of the timer
+        // Logics for each second of the GUI timer
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
             // IF time is over THEN change status ELSE continue...
             if (timer.isFinished()) {
-                System.out.println("Time stops!");
+                Log.info("Timer stops!");
                 timeline.stop();
                 timer.nextStatus();
                 beep.play();
@@ -63,7 +63,7 @@ public class Main extends Application {
             } else {
                 timer.tick(); // second--
                 textTimer.setText(interpretSeconds(timer.getSeconds()));
-                System.out.println("seconds: " + timer.getSeconds());
+                Log.info("Seconds left: " + timer.getSeconds());
             }
         });
 
@@ -75,12 +75,14 @@ public class Main extends Application {
         var stopButton = new Button("■");
         stopButton.setOnAction(actionEvent -> {
             timeline.stop();
+            Log.info("Pause!");
         });
 
         // Starts the timer
         var playButton = new Button(">");
         playButton.setOnAction(actionEvent -> {
             timeline.play();
+            Log.info("Play!");
         });
 
         // Skips change status: Work -> Relax ; Relax -> Work
@@ -91,6 +93,7 @@ public class Main extends Application {
             // Update labels:
             textStatus.setText(timer.getStatusWork());
             textTimer.setText(interpretSeconds(timer.getSeconds()));
+            Log.info("Skip! Status for now: " + timer.getStatusWork());
         });
 
         // Buttons places
