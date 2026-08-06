@@ -13,11 +13,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import static itcor.pomeedoro.TimeFormatter.interpretSeconds;
+
 public class Main extends Application {
     private Timeline timeline;
-    private int seconds = 10;
-    private boolean statusIsWork = true;
-    private int switchCount = 0;
     private Label textStatus;
     private Label textTimer;
 
@@ -27,26 +26,27 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
+        var timer = new PomeedoroTimer();
         var root = new BorderPane();
 
 
         // Timer Group
-        textTimer = new Label(interpretSeconds(seconds));
+        textTimer = new Label(interpretSeconds(timer.getSeconds()));
         textStatus = new Label("Work");
         var timeBox = new VBox(5, textTimer, textStatus);
         timeBox.setAlignment(Pos.CENTER);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
-            if (seconds <= 0) {
+            if (timer.getSeconds() <= 0) {
                 System.out.println("Time stops!");
                 timeline.stop();
-                nextStatus();
+                timer.nextStatus();
+                textStatus.setText(timer.getStatusWork());
+                textTimer.setText(interpretSeconds(timer.getSeconds()));
             } else {
-
-                seconds--;
-                textTimer.setText(interpretSeconds(seconds));
-                System.out.println("seconds: " + seconds);
+                timer.tick();
+                textTimer.setText(interpretSeconds(timer.getSeconds()));
+                System.out.println("seconds: " + timer.getSeconds());
             }
         });
 
@@ -66,7 +66,9 @@ public class Main extends Application {
 
         var skipButton = new Button(">>");
         skipButton.setOnAction(actionEvent -> {
-            nextStatus();
+            timer.nextStatus();
+            textStatus.setText(timer.getStatusWork());
+            textTimer.setText(interpretSeconds(timer.getSeconds()));
             timeline.stop();
         });
 
@@ -98,32 +100,5 @@ public class Main extends Application {
         stage.setHeight(320);
         stage.setTitle("Pomeedoro");
         stage.show();
-    }
-
-    public String interpretSeconds(int seconds) {
-        int minutes = seconds / 60;
-        int remainingSeconds = seconds % 60; // Получаем остаток
-        return "%02d:%02d".formatted(minutes, remainingSeconds);
-    }
-
-    public void switchStatus() {
-        statusIsWork = !statusIsWork;
-    }
-
-    public void nextStatus() {
-        switchStatus();
-        if (statusIsWork) {
-            seconds = 10;
-            textTimer.setText(interpretSeconds(seconds));
-            textStatus.setText("Work");
-            System.out.println("Time for Work!");
-        } else {
-            seconds = 5;
-            textTimer.setText(interpretSeconds(seconds));
-            textStatus.setText("Relax");
-            System.out.println("Time for relax!");
-        }
-
-        switchCount++;
     }
 }
