@@ -26,23 +26,31 @@ javafx {
 
 jlink {
     options = ['--strip-debug', '--compress', 'zip-6', '--no-header-files', '--no-man-pages']
-    
+
     launcher {
         name = 'pomeedoro'
+        jvmArgs = [
+                '-Xms8m',
+                '-Xmx64m',
+                '-Xss256k',
+                '-XX:+UseSerialGC',
+                '-XX:MaxRAM=128m',
+                '-XX:TieredStopAtLevel=1',
+                '-Dprism.maxvram=16M',
+                '-Djava.awt.headless=true'
+        ]
     }
-    
+
     jpackage {
         imageName = 'Pomeedoro'
         appVersion = '1.0'
         vendor = 'Itcor'
-        
-        installerType = System.getProperty('os.name').toLowerCase().with { os ->
-            if (os.contains('windows')) 'exe'
-            else if (os.contains('mac')) 'dmg'
-            else 'deb'
-        }
+        installerType = project.findProperty('installerType') ?: 'deb'
+        installerOptions = ['--name', 'pomeedoro', '--linux-package-name', 'pomeedoro', '--linux-shortcut']
     }
 }
+
+
 
 repositories {
     mavenCentral()
