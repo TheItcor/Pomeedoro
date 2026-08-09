@@ -106,6 +106,11 @@ public class Main extends Application {
 
         // 5 minutes more
         var fiveMinutes = new Button("5 min+");
+        fiveMinutes.setOnAction(actionEvent -> {
+            timer.addFiveMinutes();
+            textTimer.setText(interpretSeconds(timer.getSeconds()));
+            Log.info("Add more 5 minutes.");
+        });
 
         // For CSS
         settings.setId("downPanelButton");
