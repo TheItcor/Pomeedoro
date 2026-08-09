@@ -100,8 +100,22 @@ public class Main extends Application {
         var panelBox = new HBox(3, stopButton, playButton, skipButton);
         panelBox.setAlignment(Pos.CENTER);
 
+        // Settings/5 min+
+        // Settings button
+        var settings = new Button("⚙");
+
+        // 5 minutes more
+        var fiveMinutes = new Button("5 min+");
+
+        // For CSS
+        settings.setId("downPanelButton");
+        fiveMinutes.setId("downPanelButton");
+        // Buttons places
+        var downPanelBox = new HBox(3, settings, fiveMinutes);
+        downPanelBox.setAlignment(Pos.CENTER);
+
         // Timer & Buttons
-        var centralButtonsBox = new VBox(5, timeBox, panelBox);
+        var centralButtonsBox = new VBox(5, timeBox, panelBox, downPanelBox);
         centralButtonsBox.setAlignment(Pos.CENTER);
 
 
