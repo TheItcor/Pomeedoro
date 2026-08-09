@@ -58,4 +58,11 @@ public class PomeedoroTimer {
     public String getStatusWork() {
         return statusIsWork ? "Work" : "Relax";
     }
+
+    /**
+     * Adds 60 * 5 to {@link #seconds} (5 minutes more)
+     */
+    public void addFiveMinutes() {
+        seconds += 60 * 5;
+    }
 }
