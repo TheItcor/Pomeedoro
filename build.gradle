@@ -45,14 +45,32 @@ jlink {
     launcher {
         name = 'pomeedoro'
         jvmArgs = [
+                // Heap and GC
                 '-Xms8m',
-                '-Xmx64m',
+                '-Xmx48m',
                 '-Xss256k',
                 '-XX:+UseSerialGC',
-                '-XX:MaxRAM=64m',
                 '-XX:TieredStopAtLevel=1',
+
+                // Native memory limits
+                '-XX:MaxMetaspaceSize=48m',
+                '-XX:CompressedClassSpaceSize=16m',
+                '-XX:ReservedCodeCacheSize=24m',
+                '-XX:MaxDirectMemorySize=32m',
+
+                // Reduce JVM/JIT/GC thread count
+                '-XX:CICompilerCount=1',
+                '-XX:ActiveProcessorCount=2',
+                '-XX:ParallelGCThreads=1',
+                '-XX:ConcGCThreads=1',
+
+                // Disable extra JVM diagnostics
+                '-XX:-UsePerfData',
+
+                // JavaFX rendering
                 '-Dprism.maxvram=16M',
-                '-Djava.awt.headless=true'
+                '-Dprism.order=sw',
+                '-Dglass.gtk.uiScale=1'
         ]
     }
 
