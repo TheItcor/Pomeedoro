@@ -60,12 +60,44 @@ jlink {
         imageName = 'Pomeedoro'
         appVersion = '1.0'
         vendor = 'Itcor'
-        installerType = project.findProperty('installerType') ?: 'deb'
-        installerOptions = ['--name', 'pomeedoro', '--linux-package-name', 'pomeedoro', '--linux-shortcut']
+
+        imageOutputDir = file("$buildDir/temp-image")
+        installerOutputDir = file("$buildDir/temp-installers")
+
+        def os = org.gradle.internal.os.OperatingSystem.current()
+        def requestedType = project.findProperty('installerType')?.toString()
+
+        installerType = requestedType ?: (
+                os.isLinux() ? 'deb' :
+                        os.isWindows() ? 'exe' :
+                                os.isMacOsX() ? 'dmg' :
+                                        'rpm'
+        )
+
+        def opts = ['--name', 'pomeedoro']
+
+        if (os.isLinux()) {
+            opts.addAll([
+                    '--linux-package-name', 'pomeedoro',
+                    '--linux-shortcut'
+            ])
+        } else if (os.isWindows()) {
+            opts.addAll([
+                    '--win-menu',
+                    '--win-shortcut',
+                    '--win-dir-chooser',
+                    '--win-menu-group', 'Pomeedoro'
+            ])
+        } else if (os.isMacOsX()) {
+            opts.addAll([
+                    '--mac-package-identifier', 'itcor.pomeedoro',
+                    '--mac-package-name', 'Pomeedoro'
+            ])
+        }
+
+        installerOptions = opts
     }
 }
-
-
 
 repositories {
     mavenCentral()
@@ -73,4 +105,54 @@ repositories {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.register('jpackageTar', Tar) {
+    dependsOn 'jpackageImage'
+    group = 'distribution'
+    archiveBaseName.set('pomeedoro')
+    archiveVersion.set(project.version.toString())
+    archiveExtension.set('tar.gz')
+    compression = Compression.GZIP
+    destinationDirectory.set(layout.buildDirectory.dir('temp-distributions'))
+
+    from(layout.buildDirectory.dir('temp-image/Pomeedoro')) {
+        into 'Pomeedoro'
+    }
+}
+
+tasks.register('buildDeb') {
+    dependsOn 'jpackage'
+    group = 'distribution'
+    doLast {
+        copy {
+            from file("$buildDir/temp-installers")
+            into buildDir
+            include '*.deb'
+        }
+    }
+}
+
+tasks.register('buildRpm') {
+    dependsOn 'jpackage'
+    group = 'distribution'
+    doLast {
+        copy {
+            from file("$buildDir/temp-installers")
+            into buildDir
+            include '*.rpm'
+        }
+    }
+}
+
+tasks.register('buildTar') {
+    dependsOn 'jpackageTar'
+    group = 'distribution'
+    doLast {
+        copy {
+            from file("$buildDir/temp-distributions")
+            into buildDir
+            include '*.tar.gz'
+        }
+    }
 }
