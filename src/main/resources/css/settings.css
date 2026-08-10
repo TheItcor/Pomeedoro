@@ -1,0 +1,45 @@
+.root {
+    -fx-font-family: "JetBrains Mono", monospace;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -bg: #fff8f3;
+    -surface: #ffffff;
+    -accent: #f97316;
+    -accent-hover: #ea580c;
+    -text: #3d2c22;
+    -text-dim: #a8968a;
+}
+
+.button {
+    -fx-pref-width: 90px;
+    -fx-pref-height: 30px;
+    -fx-background-color: -surface;
+    -fx-text-fill: -text;
+    -fx-background-radius: 10px;
+    -fx-font-size: 16px;
+}
+
+.button:hover {
+    -fx-background-color: -accent-hover;
+    -fx-text-fill: #ffffff;
+}
+
+.button:pressed {
+    -fx-background-color: -accent;
+}
+
+.spinner {
+    -fx-pref-width: 68px;
+    -fx-pref-height: 30px;
+    -fx-font-size: 14px;
+    -fx-background-color: -surface;
+    -fx-background-radius: 10px;
+}
+
+.spinner .text-field {
+    -fx-pref-column-count: 2;
+    -fx-alignment: center;
+    -fx-padding: 2px 4px;
+    -fx-font-size: 16px;
+    -fx-text-fill: -text;
+}
