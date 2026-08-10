@@ -102,7 +102,7 @@ public class Main extends Application {
 
         // Settings/5 min+
         // Settings button
-        var settings = new Button("⚙");
+        //var settings = new Button("⚙");
 
         // 5 minutes more
         var fiveMinutes = new Button("5 min+");
@@ -113,10 +113,10 @@ public class Main extends Application {
         });
 
         // For CSS
-        settings.setId("downPanelButton");
+        // settings.setId("downPanelButton");
         fiveMinutes.setId("downPanelButton");
         // Buttons places
-        var downPanelBox = new HBox(3, settings, fiveMinutes);
+        var downPanelBox = new HBox(3, fiveMinutes); // settings,
         downPanelBox.setAlignment(Pos.CENTER);
 
         // Timer & Buttons
