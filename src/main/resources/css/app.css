@@ -39,6 +39,8 @@
 }
 
 #downPanelButton {
+    -fx-font-family: "JetBrains Mono", monospace;
+    -fx-font-weight: bold;
     -fx-pref-width: -1;
     -fx-pref-height: -1;
     -fx-padding: 8px 12px;
