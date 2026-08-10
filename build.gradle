@@ -76,7 +76,7 @@ jlink {
 
     jpackage {
         imageName = 'Pomeedoro'
-        appVersion = '1.0'
+        appVersion = '1.1'
         vendor = 'Itcor'
 
         imageOutputDir = file("$buildDir/temp-image")
