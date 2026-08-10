@@ -7,10 +7,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -100,9 +103,77 @@ public class Main extends Application {
         var panelBox = new HBox(3, stopButton, playButton, skipButton);
         panelBox.setAlignment(Pos.CENTER);
 
+
         // Settings/5 min+
+        // New modal window for settings
+        var dialog = new Stage();
+        dialog.initOwner(stage);
+        dialog.initModality(Modality.WINDOW_MODAL);
+        var planeSettings = new BorderPane();
+        var sceneSettings = new Scene(planeSettings, 300, 300);
+        sceneSettings.getStylesheets().add(getClass().getResource("/css/settings.css").toExternalForm());
+        dialog.setScene(sceneSettings);
+
         // Settings button
-        //var settings = new Button("⚙");
+        var settings = new Button("⚙");
+        settings.setOnAction(actionEvent -> {
+            timeline.stop();
+            var textSettings = new Label("Settings");
+
+            // Work Time Spinner
+            var workSpinner = new Spinner<Integer>();
+            workSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 99, (timer.getWORK_TIME_SECONDS()/60), 1)
+            ); // Max: 99 minutes, min: 1 minute
+            workSpinner.setEditable(true);
+            var textWorkTime = new Label("Work time:");
+            var workSettings = new HBox(3, textWorkTime, workSpinner);
+            workSettings.setAlignment(Pos.CENTER);
+
+            // Relax Time Spinner
+            var relaxSpinner = new Spinner<Integer>();
+            relaxSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 99, (timer.getRELAX_TIME_SECONDS()/60), 1)
+            );  // Max: 99 minutes, min: 1 minute
+            relaxSpinner.setEditable(true);
+            var textRelaxTime = new Label("Relax time:");
+            var relaxSettings = new HBox(3, textRelaxTime, relaxSpinner);
+            relaxSettings.setAlignment(Pos.CENTER);
+
+
+            // Ok button
+            var okSaveButton = new Button("ok");
+            okSaveButton.setOnAction(actionEvent1 -> {
+                timer.setRELAX_TIME_SECONDS(relaxSpinner.getValue() * 60);
+                Log.info("Relax seconds: " + timer.getRELAX_TIME_SECONDS());
+
+                timer.setWORK_TIME_SECONDS(workSpinner.getValue() * 60);
+                Log.info("Work seconds: " + timer.getWORK_TIME_SECONDS());
+
+                dialog.close();
+            });
+
+            // Cancel button
+            var cancelButton = new Button("cancel");
+            cancelButton.setOnAction(actionEvent1 -> {
+                dialog.close();
+            });
+
+            // Ok & Cancel button
+            var okCancelBox = new HBox(3, okSaveButton, cancelButton);
+            okCancelBox.setAlignment(Pos.CENTER);
+
+
+            // Panels & box show
+            var panelSettingsBox = new VBox(3, textSettings, workSettings, relaxSettings, okCancelBox);
+            panelSettingsBox.setAlignment(Pos.CENTER);
+            planeSettings.setCenter(panelSettingsBox);
+            dialog.showAndWait();
+
+            timer.resetTimer();
+            textTimer.setText(interpretSeconds(timer.getSeconds())); // update timer
+        });
+
 
         // 5 minutes more
         var fiveMinutes = new Button("5 min+");
@@ -113,10 +184,11 @@ public class Main extends Application {
         });
 
         // For CSS
-        // settings.setId("downPanelButton");
+        settings.setId("downPanelButton");
         fiveMinutes.setId("downPanelButton");
+
         // Buttons places
-        var downPanelBox = new HBox(3, fiveMinutes); // settings,
+        var downPanelBox = new HBox(3, settings, fiveMinutes);
         downPanelBox.setAlignment(Pos.CENTER);
 
         // Timer & Buttons
