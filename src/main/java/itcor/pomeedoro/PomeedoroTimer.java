@@ -8,8 +8,8 @@ public class PomeedoroTimer {
     private boolean statusIsWork = true;
     private int switchCount = 0;
 
-    private final int WORK_TIME_SECONDS = 30 * 60;
-    private final int RELAX_TIME_SECONDS = 5 * 60;
+    private int WORK_TIME_SECONDS = 30 * 60;
+    private int RELAX_TIME_SECONDS = 5 * 60;
 
     public PomeedoroTimer() {}
 
@@ -64,5 +64,28 @@ public class PomeedoroTimer {
      */
     public void addFiveMinutes() {
         seconds += 60 * 5;
+    }
+
+    /**
+     * Set {@link #seconds} to {@link #RELAX_TIME_SECONDS} or {@link #WORK_TIME_SECONDS}, according to {@link #statusIsWork}
+     */
+    public void resetTimer() {
+        seconds = statusIsWork ? getWORK_TIME_SECONDS() : getRELAX_TIME_SECONDS();
+    }
+
+    public void setWORK_TIME_SECONDS(int WORK_TIME_SECONDS) {
+        this.WORK_TIME_SECONDS = WORK_TIME_SECONDS;
+    }
+
+    public void setRELAX_TIME_SECONDS(int RELAX_TIME_SECONDS) {
+        this.RELAX_TIME_SECONDS = RELAX_TIME_SECONDS;
+    }
+
+    public int getWORK_TIME_SECONDS() {
+        return WORK_TIME_SECONDS;
+    }
+
+    public int getRELAX_TIME_SECONDS() {
+        return RELAX_TIME_SECONDS;
     }
 }
